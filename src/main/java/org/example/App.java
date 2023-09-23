@@ -2,14 +2,11 @@ package org.example;
 
 import org.example.data.DataExporter;
 import org.example.data.FlywayApp;
-import org.example.data.Read;
-import org.flywaydb.core.Flyway;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.example.Config.*;
 /**
  * Hello world!
  *
