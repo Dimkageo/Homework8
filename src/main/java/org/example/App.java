@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.data.DataExporter;
 import org.example.data.FlywayApp;
+import org.example.data.ReadOsbb;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,8 +20,11 @@ public class App {
 
         try (FlywayApp flywayApp = new FlywayApp().init()){
 
-            List<String> owners = flywayApp.readOwners();
-            for (String name : flywayApp.readOwners())
+            final ReadOsbb readOsbb = ReadOsbb.getInstance()
+                    .init();
+
+            List<String> owners = readOsbb.readOwners();
+            for (String name : readOsbb.readOwners())
                 System.out.println(name);
 
             DataExporter exporter = new DataExporter();
@@ -28,6 +32,5 @@ public class App {
         }catch (SQLException | IOException e){
             throw new RuntimeException(e);
         }
-
     }
 }
