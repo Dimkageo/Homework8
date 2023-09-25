@@ -8,7 +8,7 @@ import static org.example.Config.*;
 
 public class ReadOsbb {
 
-    private static ReadOsbb This;
+    private static ReadOsbb instance;
     private static final String sqlQuery = """
             Select
             apartment_owners.full_name,
@@ -35,13 +35,13 @@ public class ReadOsbb {
             AND   apartment_owners.full_name = apartment_teants.full_name""";
 
     public static synchronized ReadOsbb getInstance() {
-        if (This == null)
-            This = new ReadOsbb();
-        return This;
+        if (instance == null)
+            instance = new ReadOsbb();
+        return instance;
     }
     private Connection conn = null;
     public ReadOsbb init() throws SQLException {
-        conn = DriverManager.getConnection(jdbcUrl, username, password);
+        conn = DriverManager.getConnection(getJdbcUrl(), getUsername(), getPassword());
         return this;
     }
 

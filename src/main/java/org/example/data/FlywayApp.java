@@ -2,11 +2,12 @@ package org.example.data;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import static org.example.Config.*;
+import org.flywaydb.core.Flyway;
+import org.example.Config;
 
 public class FlywayApp implements Closeable {
 
@@ -15,8 +16,8 @@ public class FlywayApp implements Closeable {
     private void fwMigration() {
         System.out.println("Flyway migration execute");
 
-        org.flywaydb.core.Flyway.configure()
-                .dataSource(jdbcUrl, username, password)
+        Flyway.configure()
+                .dataSource(Config.getJdbcUrl(), Config.getUsername(), Config.getPassword())
                 .locations("classpath:flyway/scripts")
                 .load()
                 .migrate();
@@ -27,7 +28,7 @@ public class FlywayApp implements Closeable {
         fwMigration();
         System.out.println("Migration completed");
 
-        conn = DriverManager.getConnection(jdbcUrl, username, password);
+        conn = DriverManager.getConnection(Config.getJdbcUrl(), Config.getUsername(), Config.getPassword());
 
         return this;
     }

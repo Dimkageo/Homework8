@@ -14,22 +14,20 @@ import java.util.List;
  */
 public class App {
 
-    public static void main( String[] args )
-    {
-        System.out.println( "The program has started" );
+    public static void main(String[] args) {
+        System.out.println("The program has started");
 
-        try (FlywayApp flywayApp = new FlywayApp().init()){
+        try (FlywayApp flywayApp = new FlywayApp().init()) {
 
-            final ReadOsbb readOsbb = ReadOsbb.getInstance()
-                    .init();
+            final ReadOsbb readOsbb = ReadOsbb.getInstance().init();
 
             List<String> owners = readOsbb.readOwners();
-            for (String name : readOsbb.readOwners())
+            for (String name : owners)
                 System.out.println(name);
 
             DataExporter exporter = new DataExporter();
             exporter.saveToTextFile(owners, "Owners.txt");
-        }catch (SQLException | IOException e){
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
